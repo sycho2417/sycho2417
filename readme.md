@@ -6,7 +6,7 @@ git
 npm install express mysql2 cors
 
 CREATE USER 'Hrpatil'@'%' IDENTIFIED BY 'hrpatil';
-GRANT ALL PRIVILEGES ON Stud.* TO 'Hrpatil'@'%';
+GRANT ALL PRIVILEGES ON collegedatabase.* TO 'Hrpatil'@'%';
 FLUSH PRIVILEGES;
 
 create table students
