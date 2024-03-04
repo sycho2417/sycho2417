@@ -27,7 +27,7 @@ app.get('/api/students', async (req, res) => {
   }
 });
 
-app.get('/api/students/:Name', async (req, res) => {
+app.get('/api/students/:ID', async (req, res) => {
   try {
     const [rows] = await pool.execute('SELECT * FROM students WHERE ID = ?', [req.params.ID]);
     res.json(rows[0]);
@@ -39,9 +39,9 @@ app.get('/api/students/:Name', async (req, res) => {
 
 app.post('/api/students', async (req, res) => {
   try {
-    const { ID , Name} = req.body;
+    const { ID, Name } = req.body;
     const [result] = await pool.execute('INSERT INTO students (ID, Name) VALUES (?, ?)', [ID, Name]);
-    res.json({ id: result.insertId,ID, Name });
+    res.json({ id: result.insertId, ID, Name });
   } catch (err) {
     console.error('Query error:', err.message);
     res.status(500).json({ error: 'Internal Server Error', message: err.message });
@@ -51,8 +51,8 @@ app.post('/api/students', async (req, res) => {
 app.put('/api/students/:ID', async (req, res) => {
   try {
     const { Name } = req.body;
-    await pool.execute('UPDATE students SET ID = ? WHERE Name = ?', [ID, req.params.Name]);
-    res.json({ID: req.params.Name, ID });
+    await pool.execute('UPDATE students SET Name = ? WHERE ID = ?', [Name, req.params.ID]);
+    res.json({ ID: req.params.ID, Name });
   } catch (err) {
     console.error('Query error:', err.message);
     res.status(500).json({ error: 'Internal Server Error', message: err.message });
